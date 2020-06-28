@@ -2,24 +2,26 @@ let todoList = [];
 
 const form = document.querySelector('.js-todo__form');
 const list = document.querySelector('.js-todo__list');
-const clearAllBtn = document.querySelector('.js-todo__clear-all-btn');
 const clearDoneBtn = document.querySelector('.js-todo__clear-done-btn');
+const clearAllBtn = document.querySelector('.js-todo__clear-all-btn');
 
-function saveList() {
-  const stringifiedItems = JSON.stringify(todoList);
-  window.localStorage.setItem('todo', stringifiedItems);
-}
+// Functions
 
-function loadList() {
-  const storage = window.localStorage.getItem('todo');
-  if (storage) {
-    todoList = JSON.parse(storage);
+const loadList = () => {
+  const saved = window.localStorage.getItem('todo');
+  if (saved) {
+    todoList = JSON.parse(saved);
   }
 }
 
-function renderTodo(todo) {
+const saveList = () => {
+  const stringified = JSON.stringify(todoList);
+  window.localStorage.setItem('todo', stringified);
+}
+
+const renderTodo = (todo) => {
   let checked = '';
-  if (todo.checked) { checked = 'done'; }
+  if (todo.done) { checked = 'done'; }
   list.innerHTML += `
     <li class="todo__item ${checked}" id="${todo.id}">
       <p class="todo__text">${todo.text}</p>
@@ -30,7 +32,8 @@ function renderTodo(todo) {
   `;
 }
 
-function init() {
+const renderList = () => {
+  list.innerHTML = '';
   todoList.forEach((e) => {
     renderTodo(e);
   });
@@ -41,10 +44,10 @@ const nextId = (array) => {
   return Number.parseInt(highestId, 0) + 1;
 };
 
-function addTodo(text) {
+const addTodo = (text) => {
   const todo = {
     text,
-    checked: false,
+    done: false,
     id: nextId(todoList),
   };
   todoList.push(todo);
@@ -52,26 +55,32 @@ function addTodo(text) {
   renderTodo(todo);
 }
 
-function toggleDone(id) {
+const toggleDone = (id) => {
   const index = todoList.findIndex((item) => item.id === Number.parseInt(id, 10));
-  todoList[index].checked = !todoList[index].checked;
+  todoList[index].done = !todoList[index].done;
   saveList();
 
   const item = document.getElementById(id);
-  if (todoList[index].checked) {
-    item.classList.add('done');
-  } else {
-    item.classList.remove('done');
-  }
+  item.classList.toggle('done');
+
+  /* use for IE
+    if (todoList[index].done) {
+      item.classList.add('done');
+    } else {
+      Zitem.classList.remove('done');
+    }
+  */
 }
 
-function deleteTodo(id) {
+const removeTodo = (id) => {
   todoList = todoList.filter((item) => item.id !== Number(id));
   saveList();
   const item = document.getElementById(id);
   item.remove();
   if (todoList.length === 0) list.innerHTML = '';
 }
+
+// Event listeners
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -86,31 +95,32 @@ form.addEventListener('submit', (event) => {
 
 list.addEventListener('click', (event) => {
   if (event.target.classList.contains('todo__item')) {
-    const itemKey = event.target.getAttribute('id');
-    toggleDone(itemKey);
+    const todoId = event.target.getAttribute('id');
+    toggleDone(todoId);
   }
   if (event.target.classList.contains('todo__text')) {
-    const itemKey = event.target.parentElement.getAttribute('id');
-    toggleDone(itemKey);
+    const todoId = event.target.parentElement.getAttribute('id');
+    toggleDone(todoId);
   }
   if (event.target.classList.contains('todo__remove-btn')) {
-    const itemKey = event.target.parentElement.getAttribute('id');
-    deleteTodo(itemKey);
+    const todoId = event.target.parentElement.getAttribute('id');
+    removeTodo(todoId);
   }
+});
+
+clearDoneBtn.addEventListener('click', () => {
+  todoList = todoList.filter((e) => !e.done);
+  saveList();
+  renderList();
 });
 
 clearAllBtn.addEventListener('click', () => {
   todoList = [];
   saveList();
-  list.innerHTML = '';
+  renderList();
 });
 
-clearDoneBtn.addEventListener('click', () => {
-  todoList = todoList.filter((e) => !e.checked);
-  saveList();
-  list.innerHTML = '';
-  init();
-});
+// exec
 
 loadList();
-init();
+renderList();
