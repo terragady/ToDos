@@ -1,0 +1,30 @@
+{
+  "name": "ToDos App",
+  "version": "1.0.0",
+  "description": "ToDo App",
+  "main": "src/index.html",
+  "scripts": {
+    "lint": "eslint . --fix",
+    "dev": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terragady/todos.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terragady/todos.git/issues"
+  },
+  "homepage": "https://github.com/terragady/todos.git#readme",
+  "devDependencies": {
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "dependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
