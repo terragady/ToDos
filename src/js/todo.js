@@ -1,5 +1,10 @@
 let todoList = [];
 
+const form = document.querySelector('.js-todo-form');
+const list = document.querySelector('.js-todo-list');
+const clearAllBtn = document.querySelector('.js-delete-all-todo');
+const clearDoneBtn = document.querySelector('.js-delete-all-done');
+
 function saveList() {
   const stringifiedItems = JSON.stringify(todoList);
   window.localStorage.setItem('toDo', stringifiedItems);
@@ -13,7 +18,6 @@ function loadList() {
 }
 
 function renderTodo(todo) {
-  const list = document.querySelector('.js-todo-list');
   let checked = '';
   if (todo.checked) { checked = 'done'; }
   list.innerHTML += `
@@ -66,16 +70,8 @@ function deleteTodo(id) {
   saveList();
   const item = document.getElementById(id);
   item.remove();
-  const list = document.querySelector('.js-todo-list');
   if (todoList.length === 0) list.innerHTML = '';
 }
-
-loadList();
-init();
-
-const form = document.querySelector('.js-todo-form');
-const list = document.querySelector('.js-todo-list');
-const deleteAll = document.querySelector('.js-delete-all-todo');
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -97,16 +93,24 @@ list.addEventListener('click', (event) => {
     const itemKey = event.target.parentElement.getAttribute('id');
     toggleDone(itemKey);
   }
-
   if (event.target.classList.contains('js-delete-todo')) {
     const itemKey = event.target.parentElement.getAttribute('id');
     deleteTodo(itemKey);
   }
 });
 
-deleteAll.addEventListener('click', () => {
+clearAllBtn.addEventListener('click', () => {
   todoList = [];
   saveList();
-  const all = document.querySelector('.js-todo-list');
-  all.innerHTML = '';
+  list.innerHTML = '';
 });
+
+clearDoneBtn.addEventListener('click', () => {
+  todoList = todoList.filter((e) => !e.checked);
+  saveList();
+  list.innerHTML = '';
+  init();
+});
+
+loadList();
+init();

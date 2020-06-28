@@ -185,11 +185,20 @@ body {
   padding: 5px;
 }
 
+.delete-all-todo:active {
+  background-color: rgb(77, 77, 77);
+}
+
 .todo-delete-all {
+  min-width: 270px;
+  width: 40%;
+  align-self: center;
   text-align: center;
   color: black;
   margin-top: auto;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .todo-list:empty~.todo-delete-all {
