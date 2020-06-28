@@ -1,17 +1,17 @@
 let todoList = [];
 
-const form = document.querySelector('.js-todo-form');
-const list = document.querySelector('.js-todo-list');
-const clearAllBtn = document.querySelector('.js-delete-all-todo');
-const clearDoneBtn = document.querySelector('.js-delete-all-done');
+const form = document.querySelector('.js-todo__form');
+const list = document.querySelector('.js-todo__list');
+const clearAllBtn = document.querySelector('.js-todo__clear-all-btn');
+const clearDoneBtn = document.querySelector('.js-todo__clear-done-btn');
 
 function saveList() {
   const stringifiedItems = JSON.stringify(todoList);
-  window.localStorage.setItem('toDo', stringifiedItems);
+  window.localStorage.setItem('todo', stringifiedItems);
 }
 
 function loadList() {
-  const storage = window.localStorage.getItem('toDo');
+  const storage = window.localStorage.getItem('todo');
   if (storage) {
     todoList = JSON.parse(storage);
   }
@@ -21,9 +21,9 @@ function renderTodo(todo) {
   let checked = '';
   if (todo.checked) { checked = 'done'; }
   list.innerHTML += `
-    <li class="todo-item ${checked}" id="${todo.id}">
-      <p class="todo-text">${todo.text}</p>
-      <button class="delete-todo js-delete-todo">
+    <li class="todo__item ${checked}" id="${todo.id}">
+      <p class="todo__text">${todo.text}</p>
+      <button class="todo__remove-btn js-todo__remove">
         remove
       </button>
     </li>
@@ -75,7 +75,7 @@ function deleteTodo(id) {
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  const input = document.querySelector('.js-todo-input');
+  const input = document.querySelector('.js-todo__input');
   const text = input.value.trim();
   if (text !== '') {
     addTodo(text);
@@ -85,15 +85,15 @@ form.addEventListener('submit', (event) => {
 });
 
 list.addEventListener('click', (event) => {
-  if (event.target.classList.contains('todo-item')) {
+  if (event.target.classList.contains('todo__item')) {
     const itemKey = event.target.getAttribute('id');
     toggleDone(itemKey);
   }
-  if (event.target.classList.contains('todo-text')) {
+  if (event.target.classList.contains('todo__text')) {
     const itemKey = event.target.parentElement.getAttribute('id');
     toggleDone(itemKey);
   }
-  if (event.target.classList.contains('js-delete-todo')) {
+  if (event.target.classList.contains('todo__remove-btn')) {
     const itemKey = event.target.parentElement.getAttribute('id');
     deleteTodo(itemKey);
   }
