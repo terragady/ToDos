@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saltsthlm/salt-jsfs-todo.git"
+    "url": "git+https://github.com/terragady/todos.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/saltsthlm/salt-jsfs-todo/issues"
+    "url": "https://github.com/terragady/todos.git/issues"
   },
-  "homepage": "https://github.com/saltsthlm/salt-jsfs-todo#readme",
+  "homepage": "https://github.com/terragady/todos.git#readme",
   "devDependencies": {
     "eslint": "^6.7.1",
     "eslint-config-airbnb-base": "^14.0.0",

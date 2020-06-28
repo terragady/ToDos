@@ -4,13 +4,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>&lt;/salt&gt; :: ToDo</title>
+  <title>ToDo App</title>
   <link rel="stylesheet" type="text/css" href="./style/todo.css">
   <script defer src="./js/todo.js"></script>
 </head>
 
 <body>
-  <!-- Add your markup here -->
+  <header class="header">
+    <h1>ToDo App</h1>
+  </header>
+  <main>
+    <div class="container">
+      <form class="js-todo-form todo-form">
+        <input autofocus type="text" placeholder="Enter a new ToDo" class="js-todo-input todo-input">
+        <button class="add-todo" type="submit">Add</button>
+      </form>
+      <ul class="todo-list js-todo-list"></ul>
+      <div class="empty-state">
+        <h2 class="empty-state__title">ToDo list is empty</h2>
+        <p class="empty-state__description">Add items in the form above</p>
+
+      </div>
+      <div class="todo-delete-all"><button class="delete-all-todo js-delete-all-todo">Clear All</button></div>
+    </div>
+  </main>
 </body>
 
 </html>
