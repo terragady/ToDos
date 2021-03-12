@@ -4,3 +4,5 @@ https://todolisto.netlify.app/
 
 ToDos using vanilla JavaScript, CSS and HTML.
 Styled in the same manner as a React ToDo app.
+
+Client data is stored in local storage.
